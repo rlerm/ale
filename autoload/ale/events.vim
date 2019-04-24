@@ -105,11 +105,11 @@ function! ale#events#Init() abort
 
         if g:ale_enabled
             if l:text_changed is? 'always' || l:text_changed is# '1'
-                autocmd TextChanged,TextChangedI * call ale#Queue(g:ale_lint_delay)
+                autocmd TextChanged,TextChangedI * call ale#Queue(g:ale_lint_delay, 'lint_file')
             elseif l:text_changed is? 'normal'
-                autocmd TextChanged * call ale#Queue(g:ale_lint_delay)
+                autocmd TextChanged * call ale#Queue(g:ale_lint_delay, 'lint_file')
             elseif l:text_changed is? 'insert'
-                autocmd TextChangedI * call ale#Queue(g:ale_lint_delay)
+                autocmd TextChangedI * call ale#Queue(g:ale_lint_delay, 'lint_file')
             endif
 
             if g:ale_lint_on_enter
@@ -128,7 +128,7 @@ function! ale#events#Init() abort
             endif
 
             if g:ale_lint_on_insert_leave
-                autocmd InsertLeave * call ale#Queue(0)
+                autocmd InsertLeave * call ale#Queue(0, 'lint_file')
             endif
 
             if g:ale_echo_cursor || g:ale_cursor_detail
